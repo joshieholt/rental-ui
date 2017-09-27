@@ -1,0 +1,8 @@
+<h1>Apartments!</h1>
+
+<div *ngFor="let apartment of apartments">
+  <a (click)="selectApartment(apartment)">{{ apartment.address }}</a>
+</div>
+
+<button *ngIf="selectedApartment" (click)="nullifySelectedApartment()">Hide</button>
+<app-apartment-detail *ngIf="selectedApartment" [apartment]="selectedApartment"></app-apartment-detail>

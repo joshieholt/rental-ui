@@ -1,0 +1,22 @@
+<h1>Only ${{ apartment.rent }}</h1>
+<p>
+  {{ apartment.address }}<br> {{ apartment.city }},
+  {{ apartment.state }} {{ apartment.zip_code }}
+</p>
+<dl>
+  <dt>Number of bedrooms</dt>
+  <dd>{{ apartment.number_of_bedrooms }}</dd>
+  <dt>Number of bathrooms</dt>
+  <dd>{{ apartment.number_of_bathrooms }}</dd>
+  <dt>Square footage</dt>
+  <dd>{{ apartment.square_footage }}</dd>
+  <dt>Created by</dt>
+  <dd>{{ creator }}</dd>
+  <dt>Number of Likes</dt>
+  <dd>{{ numberOfLikes }}</dd>
+</dl>
+<ul>
+  <li>Number of bedrooms: {{ apartment.number_of_bedrooms }}</li>
+  <li>Number of bathrooms: {{ apartment.number_of_bathrooms }}</li>
+  <li>Square footage: {{ apartment.square_footage }}</li>
+</ul>
