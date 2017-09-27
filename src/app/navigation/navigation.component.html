@@ -1,4 +1,6 @@
 <p>
   <a routerLink="/">Home</a>
-  <a routerLink="/login">Login</a>
+  <a *ngIf="!currentUser" routerLink="/login">Login</a>
+  <a *ngIf="currentUser" routerLink="/my-listings">My Listings</a>
+  <button (click)="logout()" *ngIf="currentUser">Logout</button>
 </p>

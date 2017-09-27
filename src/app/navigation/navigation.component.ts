@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionDataService } from '../session-data/session-data.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-navigation',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+  private currentUser: User;
+  
+  constructor(private service: SessionDataService) { }
 
   ngOnInit() {
+    this.service
+      .userChanged
+      .subscribe(user => this.currentUser = user);
+  }
+
+  logout() {
+    this.service
+      .logout()
+      .subscribe(user => this.currentUser = user);
   }
 
 }

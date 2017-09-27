@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionDataService } from '../session-data/session-data.service';
 import { User } from '../user';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,17 +15,22 @@ export class LoginComponent implements OnInit {
   user: User;
   error: string;
   message: string;
-  
-  constructor(private data: SessionDataService) { }
+
+  constructor(private data: SessionDataService, private router: Router) { }
 
   submitLogin() {
     this.data
     .login(this.email, this.password)
     .subscribe(
-      // user => this.user = user,
-      user => this.message = 'Hooray! your name is ' + user.first_name,
+        user => {
+          if (user) {
+            // this.router.navigate(['/']);
+            this.router.navigate(['/my-listings']);
+          } else {
+            this.message = 'Could not log in with those credentials';
+          }
+        },
       e => this.message = 'Ruh Roh! ' + e
-      // () => this.error = 'Could not load apartment data'
     );
   }
 
