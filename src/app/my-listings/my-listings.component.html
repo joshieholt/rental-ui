@@ -12,3 +12,16 @@
 
 <button *ngIf="selectedApartment" (click)="nullifySelectedApartment()">Hide</button>
 <app-apartment-detail *ngIf="selectedApartment" [apartment]="selectedApartment"></app-apartment-detail>
+
+<div *ngIf="!currentUser">
+  <a href="#">login to like</a>
+</div>
+
+<div *ngIf="!currentUserIsLister && !currentUserHasLiked">
+  <button>Like this listing</button>
+</div>
+
+<div *ngIf="currentUserIsLister">
+<button *ngIf="selectedApartment && !selectedApartment.is_active" (click)="activateApartment()">Activate</button>
+<button *ngIf="selectedApartment && selectedApartment.is_active" (click)="deactivateApartment()">Deactivate</button>
+</div>

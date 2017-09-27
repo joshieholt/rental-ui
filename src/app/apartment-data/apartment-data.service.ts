@@ -25,4 +25,16 @@ export class ApartmentDataService {
       .map(response => response.json());
   }
 
+  activateApartment(apartment: Apartment): Observable<Apartment> {
+    return this.http
+      .post(`http://localhost:4567/api/apartments/${apartment.id}/activations`, {}, this.options)
+      .map(response => response.json());
+  }
+
+  deactivateApartment(apartment: Apartment): Observable<Apartment> {
+    return this.http
+      .post(`http://localhost:4567/api/apartments/${apartment.id}/deactivations`, {}, this.options)
+      .map(response => response.json());
+  }
+
 }

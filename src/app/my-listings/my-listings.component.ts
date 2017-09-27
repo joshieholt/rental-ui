@@ -19,12 +19,17 @@ export class MyListingsComponent implements OnInit {
 
   constructor(private data: ApartmentDataService, private service: SessionDataService) { }
 
+  get currentUserIsLister() {
+    return this.service.getCurrentUser() &&  this.selectedApartment && this.service.getCurrentUser().id === this.selectedApartment.user_id;
+  }
+
   ngOnInit() {
+
     this.data
       .getMyListings()
       .subscribe(
         apartments => this.apartments = apartments,
-        () => this.error = 'Count not load user apartments data'
+        () => this.error = 'Could not load user apartments data'
         // apartments => this.error = 'No error',
         // e => this.error = 'Error ' + e
       );
@@ -32,6 +37,24 @@ export class MyListingsComponent implements OnInit {
 
   selectApartment(apartment: Apartment) {
     this.selectedApartment = apartment;
+  }
+
+  activateApartment() {
+    this.data
+      .activateApartment(this.selectedApartment)
+      .subscribe(
+        apartment => this.selectedApartment = apartment,
+        () => this.error = 'Could not activate apartment'
+      );
+  }
+
+  deactivateApartment() {
+    this.data
+      .deactivateApartment(this.selectedApartment)
+      .subscribe(
+        apartment => this.selectedApartment = apartment,
+        () => this.error = 'Could not deactivate apartment'
+      );
   }
 
   nullifySelectedApartment() {

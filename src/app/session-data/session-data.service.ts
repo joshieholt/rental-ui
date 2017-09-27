@@ -13,6 +13,7 @@ export class SessionDataService {
   options = { withCredentials: true };
 
   userChanged: Subject<User>;
+  private currentUser: User;
 
   constructor(private http: Http) {
     this.userChanged = new Subject<User>();
@@ -24,14 +25,20 @@ export class SessionDataService {
     return this.http
       .post(this.baseUrl, payload, this.options)
       .map(response => response.status === 201 ? response.json() : null)
-      .do(user => this.userChanged.next(user));
+      .do(user => this.userChanged.next(user))
+      .do(user => this.currentUser = user);
   }
 
   logout(): Observable<User> {
     return this.http
       .delete(`${this.baseUrl}/mine`, this.options)
       .map(response => null)
-      .do(user => this.userChanged.next(user));
+      .do(user => this.userChanged.next(user))
+      .do(user => this.currentUser = user);
+  }
+
+  getCurrentUser(): User {
+    return this.currentUser;
   }
 
 }
