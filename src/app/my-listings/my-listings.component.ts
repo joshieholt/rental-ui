@@ -40,7 +40,6 @@ export class MyListingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     this.data
       .getMyListings()
       .subscribe(
@@ -93,6 +92,7 @@ export class MyListingsComponent implements OnInit {
 
   nullifySelectedApartment() {
     this.selectedApartment = null;
+    this.likers = null;
   }
 
 }

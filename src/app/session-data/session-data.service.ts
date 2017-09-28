@@ -38,6 +38,7 @@ export class SessionDataService {
   }
 
   getCurrentUser(): User {
+    console.log('ses.currUser: ' + this.currentUser);
     return this.currentUser;
   }
 
