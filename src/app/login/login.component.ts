@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
   user: User;
   error: string;
   message: string;
-
+  pathInfo: string;
+  
   constructor(private data: SessionDataService, private router: Router) { }
 
   submitLogin() {

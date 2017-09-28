@@ -5,10 +5,10 @@
 </div>
 
 <button *ngIf="selectedApartment" (click)="nullifySelectedApartment()">Hide</button>
-<app-apartment-detail *ngIf="selectedApartment" [apartment]="selectedApartment"></app-apartment-detail>
+<app-apartment-detail *ngIf="selectedApartment" [apartment]="selectedApartment" [creator]="creator" [numberOfLikers]="numberOfLikers"></app-apartment-detail>
 
 <div *ngIf="selectedApartment && !currentUser">
-  <a href="#">login to like</a>
+  <a routerLink="/login/home">login to like</a>
 </div>
   
 <div *ngIf="selectedApartment && currentUser && !currentUserIsLister">

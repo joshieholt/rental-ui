@@ -11,7 +11,7 @@
 </div>
 
 <button *ngIf="selectedApartment" (click)="nullifySelectedApartment()">Hide</button>
-<app-apartment-detail *ngIf="selectedApartment" [apartment]="selectedApartment"></app-apartment-detail>
+<app-apartment-detail *ngIf="selectedApartment" [apartment]="selectedApartment" [creator]="creator" [numberOfLikers]="numberOfLikers"></app-apartment-detail>
 
 
 <div *ngIf="currentUserIsLister">

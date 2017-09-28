@@ -13,10 +13,18 @@ import { LoginComponent } from './login/login.component';
 import { SessionDataService } from './session-data/session-data.service';
 import { MyListingsComponent } from './my-listings/my-listings.component';
 import { CreateApartmentComponent } from './create-apartment/create-apartment.component';
+import { UserDataService } from './user-data/user-data.service';
 
 const routes: Route[] = [
-  { path: 'login', component: LoginComponent },
-  { path: 'my-listings', component: MyListingsComponent},
+  { path: 'login', component: LoginComponent,
+    children: [{
+      path: 'mine',
+      component: MyListingsComponent
+    }, {
+      path: 'home',
+      component: ApartmentListingsComponent
+    }] },
+  // { path: 'my-listings', component: MyListingsComponent},
   { path: 'create-apartment', component: CreateApartmentComponent},
   { path: '',      component: ApartmentListingsComponent }
 ];
@@ -37,7 +45,7 @@ const routes: Route[] = [
     FormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [ApartmentDataService, SessionDataService],
+  providers: [ApartmentDataService, SessionDataService, UserDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

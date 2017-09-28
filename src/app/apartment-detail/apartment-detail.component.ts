@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Apartment } from '../apartment';
+import { User } from '../user';
 
 @Component({
   selector: 'app-apartment-detail',
@@ -10,6 +11,12 @@ export class ApartmentDetailComponent implements OnInit {
 
   @Input()
   apartment: Apartment;
+
+  @Input()
+  creator: User;
+
+  @Input()
+  numberOfLikers: number;
   
   constructor() { }
 

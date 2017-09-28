@@ -3,6 +3,7 @@ import { ApartmentDataService } from '../apartment-data/apartment-data.service';
 import { Apartment } from '../apartment';
 import { User } from '../user';
 import { SessionDataService } from '../session-data/session-data.service';
+import { UserDataService } from '../user-data/user-data.service';
 
 @Component({
   selector: 'app-apartment-listings',
@@ -15,16 +16,29 @@ export class ApartmentListingsComponent implements OnInit {
   apartments: Apartment[];
   likers: User[];
   error: string;
+  creator: User = new User();
 
   private currentUser: User;
-
-  constructor(private data: ApartmentDataService, private service: SessionDataService) { }
+  
+  constructor(private aptData: ApartmentDataService, private service: SessionDataService, private userData: UserDataService) { }
 
   get currentUserIsLister() {
-    // this.currentUser = this.service.getCurrentUser();
     return this.currentUser && this.selectedApartment && this.currentUser.id === this.selectedApartment.user_id;
   }
 
+  get apartmentCreator(): User {
+    console.log('in get apartmentCreator()');
+    return this.creator;
+  }
+
+  get numberOfLikers() {
+    if (this.likers === null || this.likers === undefined) {
+      return 0;
+    } else {
+      return this.likers.length;
+    }
+  }
+  
   get currentUserHasLiked() {
     let hasLiked = false;
     // this.currentUser = this.service.getCurrentUser();
@@ -38,18 +52,18 @@ export class ApartmentListingsComponent implements OnInit {
     return hasLiked;
   }
 
-  get numberOfLikers() {
-    return this.likers.length;
-  }
-  
   ngOnInit() {
     this.service
     .userChanged
     .subscribe(user => this.currentUser = user);
 
-    if (this.selectedApartment) { this.getApartmentLikers(); }
+    if (this.selectedApartment) { 
+      this.getApartmentLikers(); 
+      this.getApartmentCreator();
+      console.log('just ran likers and creators in ngOnInIt');
+    }
 
-    this.data
+    this.aptData
     .getActiveListings()
     .subscribe(
       apartments => this.apartments = apartments,
@@ -62,22 +76,32 @@ export class ApartmentListingsComponent implements OnInit {
     this.currentUser = this.service.getCurrentUser();
     this.selectedApartment = apartment;
     this.getApartmentLikers();
-    console.log('currentUser: ' + this.currentUser.id);
-    console.log('selectedApt: ' + this.selectedApartment.id + ', ' + this.selectedApartment.user_id);
+    this.getApartmentCreator();
+    console.log('just ran likers and creators in selectApartment');
   }
 
   getApartmentLikers() {
-    this.data
+    this.aptData
       .getLikers(this.selectedApartment)
       .subscribe(
-        users => this.likers = users,
+        users => console.log('got likers', users) || (this.likers = users),
         () => this.error = 'Could not find likers'
+      );
+  }
+
+  getApartmentCreator() {
+    console.log('in getApartmentCreator');
+    this.userData
+      .getUser(this.selectedApartment.user_id)
+      .subscribe(
+        user =>  console.log('got creator', user) || (this.creator = user),
+        () => this.error = 'Could not find creator'
       );
   }
 
   likeApartment() {
     console.log('likeApt.selectedApt: ' + this.selectedApartment);
-    this.data
+    this.aptData
       .likeApartment(this.selectedApartment)
       .subscribe(
         apartment => {
