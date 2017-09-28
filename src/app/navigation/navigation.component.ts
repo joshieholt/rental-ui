@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionDataService } from '../session-data/session-data.service';
 import { User } from '../user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -11,7 +12,7 @@ export class NavigationComponent implements OnInit {
 
   private currentUser: User;
   
-  constructor(private service: SessionDataService) { }
+  constructor(private service: SessionDataService, private router: Router) { }
 
   ngOnInit() {
     this.service
@@ -22,7 +23,10 @@ export class NavigationComponent implements OnInit {
   logout() {
     this.service
       .logout()
-      .subscribe(user => this.currentUser = user);
+      .subscribe(user => {
+        this.currentUser = user;
+        this.router.navigate(['/']);
+      }
+      );
   }
-
 }

@@ -13,12 +13,12 @@
 <button *ngIf="selectedApartment" (click)="nullifySelectedApartment()">Hide</button>
 <app-apartment-detail *ngIf="selectedApartment" [apartment]="selectedApartment"></app-apartment-detail>
 
-<div *ngIf="!currentUser">
+<div *ngIf="selectedApartment && !currentUser">
   <a href="#">login to like</a>
 </div>
 
-<div *ngIf="!currentUserIsLister && !currentUserHasLiked">
-  <button>Like this listing</button>
+<div *ngIf="selectedApartment && !currentUserIsLister">
+  <button *ngIf="!currentUserHasLiked">Like this listing</button>
 </div>
 
 <div *ngIf="currentUserIsLister">
