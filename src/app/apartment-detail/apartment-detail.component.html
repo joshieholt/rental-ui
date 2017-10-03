@@ -1,3 +1,9 @@
+<div *ngIf="!apartment || !creator">
+  Loading details...
+</div>
+<div *ngIf="apartment && creator">
+<button *ngIf="apartment" [routerLink]="basePath">Hide</button>
+{{ error  }}
 <h1>Only ${{ apartment.rent }}</h1>
 <p>
   {{ apartment.address }}<br> {{ apartment.city }},
@@ -21,4 +27,15 @@
   <li>Square footage: {{ apartment.square_footage }}</li>
 </ul>
 
+<div *ngIf="apartment && !currentUser">
+  <a routerLink="/login">Login to like</a>
+</div>
+<div *ngIf="apartment && currentUser && !currentUserIsLister">
+  <button (click)="likeApartment()" *ngIf="!currentUserHasLiked">Like this listing</button>
+</div>
 
+<div *ngIf="currentUserIsLister">
+  <button *ngIf="apartment && !apartment.is_active" (click)="activateApartment()">Activate</button>
+  <button *ngIf="apartment && apartment.is_active" (click)="deactivateApartment()">Deactivate</button>
+</div>
+</div>

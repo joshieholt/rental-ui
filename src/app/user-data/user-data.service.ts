@@ -11,6 +11,12 @@ export class UserDataService {
 
   constructor(private http: Http) { }
 
+  createUser(user: User): Observable<User> {
+    return this.http
+      .post(`${this.baseUrl}/new`, user, this.options)
+      .map(response => response.json());
+  }
+
   getUser(id: number): Observable<User> {
     return this.http
       .get(`${this.baseUrl}/${id}`)

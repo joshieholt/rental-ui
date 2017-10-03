@@ -14,19 +14,29 @@ import { SessionDataService } from './session-data/session-data.service';
 import { MyListingsComponent } from './my-listings/my-listings.component';
 import { CreateApartmentComponent } from './create-apartment/create-apartment.component';
 import { UserDataService } from './user-data/user-data.service';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { AuthenticationGuardGuard } from './authentication-guard.guard';
 
 const routes: Route[] = [
-  { path: 'login', component: LoginComponent,
-    children: [{
-      path: 'mine',
-      component: MyListingsComponent
-    }, {
-      path: 'home',
-      component: ApartmentListingsComponent
-    }] },
-  // { path: 'my-listings', component: MyListingsComponent},
-  { path: 'create-apartment', component: CreateApartmentComponent},
-  { path: '',      component: ApartmentListingsComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignUpComponent },
+  {
+    path: 'active', 
+    component: ApartmentListingsComponent,
+    children: [
+      { path: ':id', component: ApartmentDetailComponent }
+    ]
+  },
+  {
+    path: 'mine',
+    component: MyListingsComponent,
+    canActivate: [AuthenticationGuardGuard],
+    children: [
+      { path: 'new', component: CreateApartmentComponent },
+      { path: ':id', component: ApartmentDetailComponent }
+    ]
+  },
+  { path: '', redirectTo: '/active', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -37,7 +47,8 @@ const routes: Route[] = [
     ApartmentDetailComponent,
     LoginComponent,
     MyListingsComponent,
-    CreateApartmentComponent
+    CreateApartmentComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +56,7 @@ const routes: Route[] = [
     FormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [ApartmentDataService, SessionDataService, UserDataService],
+  providers: [ApartmentDataService, SessionDataService, UserDataService, AuthenticationGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

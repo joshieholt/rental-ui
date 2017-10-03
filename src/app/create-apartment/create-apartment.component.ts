@@ -32,7 +32,7 @@ export class CreateApartmentComponent implements OnInit {
       .subscribe(
         apartment => {
           this.newApartment = apartment;
-          this.router.navigate(['/my-listings']);
+          this.router.navigate(['/mine']);
         },
         () => this.error = 'Could not create apartment'
       );

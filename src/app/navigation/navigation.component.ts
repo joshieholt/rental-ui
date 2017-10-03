@@ -18,6 +18,7 @@ export class NavigationComponent implements OnInit {
     this.service
       .userChanged
       .subscribe(user => this.currentUser = user);
+    this.currentUser = this.service.getCurrentUser();
   }
 
   logout() {

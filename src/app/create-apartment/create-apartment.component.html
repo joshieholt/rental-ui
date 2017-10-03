@@ -1,11 +1,11 @@
 <form (submit)="createApartment()">
-  <input name="address" type="text" [(ngModel)]="address" placeholder="street address"><br>
-  <input name="city" type="text" [(ngModel)]="city" placeholder="city"><br>
-  <input name="state" type="text" [(ngModel)]="state" placeholder="state"><br>
-  <input name="zip_code" type="text" [(ngModel)]="zip_code" placeholder="zip code"><br>
-  <input name="number_of_bedrooms" type="number" [(ngModel)]="number_of_bedrooms" placeholder="bedrooms"><br>
-  <input name="number_of_bathrooms" type="number" [(ngModel)]="number_of_bathrooms" placeholder="bathrooms"><br>
-  <input name="square_footage" type="number" [(ngModel)]="square_footage" placeholder="square_footage"><br>
-  <input name="rent" type="number" [(ngModel)]="rent" placeholder="rent"><br>
+  <input name="address" type="text" [(ngModel)]="address" placeholder="street address" autofocus required><br>
+  <input name="city" type="text" [(ngModel)]="city" placeholder="city" required><br>
+  <input name="state" type="text" [(ngModel)]="state" placeholder="state" required><br>
+  <input name="zip_code" type="text" [(ngModel)]="zip_code" placeholder="zip code" required><br>
+  <input name="number_of_bedrooms" type="number" [(ngModel)]="number_of_bedrooms" placeholder="bedrooms" required><br>
+  <input name="number_of_bathrooms" type="number" [(ngModel)]="number_of_bathrooms" placeholder="bathrooms" required><br>
+  <input name="square_footage" type="number" [(ngModel)]="square_footage" placeholder="square_footage" required><br>
+  <input name="rent" type="number" [(ngModel)]="rent" placeholder="rent" required><br>
   <button>Add listing</button>
 </form>

@@ -1,0 +1,7 @@
+<form (submit)="createUser()">
+  <input name="email" type="email" [(ngModel)]="email" placeholder="email" autofocus required><br>
+  <input name="password" type="password" [(ngModel)]="password" placeholder="password" required><br>
+  <input name="first_name" type="text" [(ngModel)]="first_name" placeholder="first name" required><br>
+  <input name="last_name" type="text" [(ngModel)]="last_name" placeholder="last name" required><br>
+  <button>Sign up!</button>
+</form>

@@ -2,19 +2,23 @@
 {{ error }}
 <h2>Active Apartments</h2>
 <div *ngFor="let apartment of apartments">
-  <a *ngIf="apartment.is_active" (click)="selectApartment(apartment)">{{ apartment.address }}</a>
+  <a *ngIf="apartment.is_active" routerLink="/mine/{{ apartment.id }}">{{ apartment.address }}</a>
 </div>
 
 <h2>Inactive Apartments</h2>
 <div *ngFor="let apartment of apartments">
-  <a *ngIf="!apartment.is_active" (click)="selectApartment(apartment)">{{ apartment.address }}</a>
+  <a *ngIf="!apartment.is_active" routerLink="/mine/{{ apartment.id }}">{{ apartment.address }}</a>
 </div>
 
-<button *ngIf="selectedApartment" (click)="nullifySelectedApartment()">Hide</button>
-<app-apartment-detail *ngIf="selectedApartment" [apartment]="selectedApartment" [creator]="creator" [numberOfLikers]="numberOfLikers"></app-apartment-detail>
+<!-- <button *ngIf="selectedApartment" (click)="nullifySelectedApartment()">Hide</button> -->
+
+<router-outlet></router-outlet>
+<!--
+<app-apartment-detail *ngIf="selectedApartment" [apartment]="selectedApartment" [creator]="creator" [numberOfLikers]="numberOfLikers" (apartmentChanged)="getLatest()"></app-apartment-detail>
 
 
 <div *ngIf="currentUserIsLister">
 <button *ngIf="selectedApartment && !selectedApartment.is_active" (click)="activateApartment()">Activate</button>
 <button *ngIf="selectedApartment && selectedApartment.is_active" (click)="deactivateApartment()">Deactivate</button>
 </div>
+-->

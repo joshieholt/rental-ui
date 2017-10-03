@@ -5,13 +5,21 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 import { User } from '../user';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class ApartmentDataService {
 
   options = { withCredentials: true };
+  apartmentChanged = new Subject<Apartment>();
 
   constructor(private http: Http) { }
+
+  getApartmentById(id: number) {
+    return this.http
+      .get(`http://localhost:4567/api/apartments/${id}`, this.options)
+      .map(response => response.json());
+  }
 
   getActiveListings(): Observable<Apartment[]> {
     return this.http
@@ -41,18 +49,21 @@ export class ApartmentDataService {
   activateApartment(apartment: Apartment): Observable<Apartment> {
     return this.http
       .post(`http://localhost:4567/api/apartments/${apartment.id}/activations`, {}, this.options)
-      .map(response => response.json());
+      .map(response => response.json())
+      .do(apartment => this.apartmentChanged.next(apartment));
   }
 
   deactivateApartment(apartment: Apartment): Observable<Apartment> {
     return this.http
       .post(`http://localhost:4567/api/apartments/${apartment.id}/deactivations`, {}, this.options)
-      .map(response => response.json());
+      .map(response => response.json())
+      .do(apartment => this.apartmentChanged.next(apartment));
   }
 
   likeApartment(apartment: Apartment): Observable<Apartment> {
     return this.http
       .post(`http://localhost:4567/api/apartments/${apartment.id}/like`, {}, this.options)
-      .map(response => response.json());
+      .map(response => response.json())
+      .do(apartment => this.apartmentChanged.next(apartment));
   }
 }

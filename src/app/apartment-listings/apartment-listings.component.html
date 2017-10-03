@@ -1,10 +1,14 @@
 <h1>Apartments!</h1>
 
 <div *ngFor="let apartment of apartments">
-  <a (click)="selectApartment(apartment)">{{ apartment.address }}</a>
+  <a routerLink="/active/{{ apartment.id }}">{{ apartment.address }}</a>
 </div>
 
-<button *ngIf="selectedApartment" (click)="nullifySelectedApartment()">Hide</button>
+<!-- <button *ngIf="selectedApartment" routerLink="/active">Hide</button> -->
+
+<router-outlet></router-outlet>
+
+<!--
 <app-apartment-detail *ngIf="selectedApartment" [apartment]="selectedApartment" [creator]="creator" [numberOfLikers]="numberOfLikers"></app-apartment-detail>
 
 <div *ngIf="selectedApartment && !currentUser">
@@ -14,3 +18,4 @@
 <div *ngIf="selectedApartment && currentUser && !currentUserIsLister">
   <button (click)="likeApartment()" *ngIf="!currentUserHasLiked">Like this listing</button>
 </div>
+-->

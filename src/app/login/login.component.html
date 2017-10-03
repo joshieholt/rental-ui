@@ -1,7 +1,6 @@
-<form (submit)="submitLogin()">
-  <input name="email" type="email" [(ngModel)]="email" placeholder="email">
-  <input name="password" type="password" [(ngModel)]="password" placeholder="password">
+<form (submit)="submitLogin()" *ngIf="!currentUser">
+  <input name="email" type="email" [(ngModel)]="email" placeholder="email" autofocus required>
+  <input name="password" type="password" [(ngModel)]="password" placeholder="password" required>
   <button>Login</button>
 </form>
 {{ message }}
-<router-outlet></router-outlet>

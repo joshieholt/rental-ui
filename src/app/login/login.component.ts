@@ -14,24 +14,27 @@ export class LoginComponent implements OnInit {
   password: string;
   user: User;
   error: string;
-  message: string;
   pathInfo: string;
-  
+  currentUser: User;
+  returnUrl: string;
+
   constructor(private data: SessionDataService, private router: Router) { }
 
   submitLogin() {
+    let navPath = window.localStorage.getItem('navPath') || '/mine';
     this.data
     .login(this.email, this.password)
     .subscribe(
         user => {
           if (user) {
-            // this.router.navigate(['/']);
-            this.router.navigate(['/my-listings']);
+            this.currentUser = user;
+            window.localStorage.setItem('navPath', '/mine');
+            this.router.navigate([navPath]);
           } else {
-            this.message = 'Could not log in with those credentials';
+            this.error = 'Could not log in with those credentials';
           }
         },
-      e => this.message = 'Ruh Roh! ' + e
+      e => this.error = 'Ruh Roh! ' + e
     );
   }
 

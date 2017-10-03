@@ -57,63 +57,18 @@ export class ApartmentListingsComponent implements OnInit {
     .userChanged
     .subscribe(user => this.currentUser = user);
 
-    if (this.selectedApartment) { 
-      this.getApartmentLikers(); 
-      this.getApartmentCreator();
-      console.log('just ran likers and creators in ngOnInIt');
-    }
+    this.aptData
+      .apartmentChanged
+      .subscribe(() => this.refreshApartments());
+    this.refreshApartments();
+  }
 
+  private refreshApartments() {
     this.aptData
     .getActiveListings()
     .subscribe(
       apartments => this.apartments = apartments,
       () => this.error = 'Could not load apartment data'
     );
-  }
-
-  selectApartment(apartment: Apartment) {
-    console.log('in selectApartment');
-    this.currentUser = this.service.getCurrentUser();
-    this.selectedApartment = apartment;
-    this.getApartmentLikers();
-    this.getApartmentCreator();
-    console.log('just ran likers and creators in selectApartment');
-  }
-
-  getApartmentLikers() {
-    this.aptData
-      .getLikers(this.selectedApartment)
-      .subscribe(
-        users => console.log('got likers', users) || (this.likers = users),
-        () => this.error = 'Could not find likers'
-      );
-  }
-
-  getApartmentCreator() {
-    console.log('in getApartmentCreator');
-    this.userData
-      .getUser(this.selectedApartment.user_id)
-      .subscribe(
-        user =>  console.log('got creator', user) || (this.creator = user),
-        () => this.error = 'Could not find creator'
-      );
-  }
-
-  likeApartment() {
-    console.log('likeApt.selectedApt: ' + this.selectedApartment);
-    this.aptData
-      .likeApartment(this.selectedApartment)
-      .subscribe(
-        apartment => {
-          this.selectedApartment = apartment;
-          this.getApartmentLikers();
-        },
-        () => this.error = 'Could not like apartment'
-      );
-  }
-
-  nullifySelectedApartment() {
-    this.selectedApartment = null;
-    this.likers = null;
   }
 }
